@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 250 249 247; /* warm-50 - NO YELLOW */
+    --foreground: 42 37 31; /* warm-900 */
+    --card: 250 249 247; /* warm-50 */
+    --card-foreground: 42 37 31; /* warm-900 */
+    --popover: 250 249 247; /* warm-50 */
+    --popover-foreground: 42 37 31; /* warm-900 */
+    --primary: 137 132 131; /* #898483 - NO YELLOW */
+    --primary-foreground: 250 249 247; /* warm-50 */
+    --secondary: 232 228 223; /* warm-200 - NO YELLOW */
+    --secondary-foreground: 90 82 72; /* warm-700 */
+    --muted: 232 228 223; /* warm-200 */
+    --muted-foreground: 122 112 103; /* warm-600 */
+    --accent: 212 207 199; /* warm-300 - NO YELLOW */
+    --accent-foreground: 90 82 72; /* warm-700 */
+    --destructive: 176 130 138; /* dusk-400 */
+    --destructive-foreground: 250 249 247; /* warm-50 */
+    --border: 212 207 199; /* warm-300 - NO YELLOW */
+    --input: 212 207 199; /* warm-300 */
+    --ring: 137 132 131; /* #898483 - NO YELLOW */
+    --radius: 0.5rem;
+    --font-serif: var(--font-playfair);
+    --font-sans: var(--font-inter);
+  }
+
+  .dark {
+    --background: 12 14 10; /* Much darker than #181C14 */
+    --foreground: 245 243 240; /* warm-100 */
+    --card: 20 22 18; /* Slightly lighter than background for cards */
+    --card-foreground: 245 243 240; /* warm-100 */
+    --popover: 20 22 18; /* Slightly lighter than background */
+    --popover-foreground: 245 243 240; /* warm-100 */
+    --primary: 137 132 131; /* #898483 - NO YELLOW */
+    --primary-foreground: 12 14 10; /* Dark background for contrast */
+    --secondary: 28 30 26; /* Much darker secondary */
+    --secondary-foreground: 245 243 240; /* warm-100 */
+    --muted: 28 30 26; /* Much darker muted */
+    --muted-foreground: 184 176 165; /* warm-400 */
+    --accent: 36 38 34; /* Much darker accent */
+    --accent-foreground: 245 243 240; /* warm-100 */
+    --destructive: 168 125 125; /* dusk-500 */
+    --destructive-foreground: 245 243 240; /* warm-100 */
+    --border: 28 30 26; /* Much darker border */
+    --input: 28 30 26; /* Much darker input */
+    --ring: 137 132 131; /* #898483 - NO YELLOW */
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: hsl(var(--background)) !important;
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Simple autofill override - NO YELLOW */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+  -webkit-text-fill-color: #2a251f;
+}
+
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark textarea:-webkit-autofill,
+.dark textarea:-webkit-autofill:hover,
+.dark textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #181c14 inset;
+  -webkit-text-fill-color: #f5f3f0;
+}
+
+/* Placeholder text styling for better visibility */
+input::placeholder,
+textarea::placeholder {
+  color: #7a7067 !important; /* warm-600 - visible in light mode */
+  opacity: 1 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #b8b0a5 !important; /* warm-400 - visible in dark mode */
+  opacity: 1 !important;
+}
+
+/* Focus styles for accessibility - NO YELLOW */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #898483 !important; /* Gray focus - NO YELLOW */
+  outline-offset: 2px !important;
+}
+
+/* Custom scrollbar with NO YELLOW */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c8bebc; /* Light gray - NO YELLOW */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #898483; /* Dark gray - NO YELLOW */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a7067; /* Darker gray on hover - NO YELLOW */
+}
+
+/* Dark mode scrollbar - Much darker */
+.dark ::-webkit-scrollbar-track {
+  background: #0c0e0a; /* Very dark background */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #898483; /* Same gray in dark mode */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #a8a09d; /* Lighter on hover in dark mode */
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Image loading animation */
+img {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Parallax effect */
+.parallax {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Backdrop blur support with warm tones - NO YELLOW */
+.backdrop-blur-md {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Gallery breathing room */
+.gallery-item {
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Curated space feeling */
+.section-spacing {
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding: 6rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding: 8rem 0;
+  }
+}
+
+/* Ensure form labels and text are visible - NO YELLOW */
+label {
+  color: hsl(var(--foreground)) !important;
+}
+
+.dark label {
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  body {
+    padding: 0 1rem;
+  }
+  .section-spacing {
+    padding: 2rem 0;
+  }
+  .gallery-item {
+    padding: 0.5rem;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-align: left;
+    word-break: break-word;
+  }
+  .font-serif, .font-sans {
+    text-align: left;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .parallax {
+    background-attachment: scroll;
+  }
+}
