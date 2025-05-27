@@ -429,7 +429,7 @@ export default function PhotographyPortfolio() {
 							transition={{ duration: 0.8 }}
 						>
 							<img
-								src="/images/DSCF0283.jpg"
+								src="/images/DSCF0283.JPG"
 								alt="Krishna Somani"
 								className="w-full max-w-md mx-auto rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-500"
 							/>
