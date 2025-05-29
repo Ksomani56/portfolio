@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 250 249 247; /* warm-50 - NO YELLOW */
+    --background: 40 20% 98%; /* warm-50 - NO YELLOW */
     --foreground: 42 37 31; /* warm-900 */
     --card: 250 249 247; /* warm-50 */
     --card-foreground: 42 37 31; /* warm-900 */
@@ -55,6 +55,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: clip;
 }
 
 html {
@@ -158,6 +163,7 @@ textarea:focus-visible {
 /* Image loading animation */
 img {
   transition: opacity 0.3s ease, transform 0.3s ease;
+  overflow-x: hidden;
 }
 
 /* Custom animations */
@@ -234,7 +240,7 @@ label {
 /* Mobile responsive adjustments */
 @media (max-width: 640px) {
   body {
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
   }
   .section-spacing {
     padding: 2rem 0;
@@ -258,5 +264,23 @@ label {
   }
   .parallax {
     background-attachment: scroll;
+  }
+}
+
+.cat-mobile-focus {
+  background-position: center;
+}
+@media (max-width: 640px) {
+  .cat-mobile-focus {
+    background-position: var(--cat-obj-pos, center) !important;
+  }
+}
+
+.gallery-mobile-focus {
+  object-position: var(--gallery-obj-pos, 50% 50%);
+}
+@media (max-width: 640px) {
+  .gallery-mobile-focus {
+    object-position: var(--gallery-obj-pos, 50% 50%) !important;
   }
 }

@@ -317,31 +317,42 @@ export default function PhotographyPortfolio() {
 			</section>
 
 			{/* Scroll-Based Categories */}
-			{categories.map((category, index) => (
-				<motion.section
-					key={category.id}
-					initial={{ opacity: 0 }}
-					whileInView={{ opacity: 1 }}
-					transition={{ duration: 1 }}
-					className="relative h-screen flex items-center justify-center overflow-hidden"
-				>
-					<div
-						className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-						style={{ backgroundImage: `url('${category.image}')` }}
-					/>
-					<div className="absolute inset-0 backdrop-blur-none bg-black/10" />
-
-					<motion.div
-						initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-						whileInView={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.8, delay: 0.3 }}
-						className="relative z-10 text-center text-white max-w-4xl mx-auto px-4"
+			{categories.map((category, index) => {
+				// Use a CSS custom property for object-position, and set it via a mobile media query
+				let objectPosition = undefined;
+				if (category.image === '/images/Ksomani-0060.jpg') objectPosition = '--cat-obj-pos: 45% 0%';
+				// if (category.image === '/images/Ksomani-0067.jpg') objectPosition = '--cat-obj-pos: 40% 0%';
+				if (category.image === '/images/IMG_0041.jpg') objectPosition = '--cat-obj-pos: 75% 0%';
+				if (category.image === '/images/IMG_9703.jpg') objectPosition = '--cat-obj-pos: 70% 0%';
+				return (
+					<motion.section
+						key={category.id}
+						initial={{ opacity: 0 }}
+						whileInView={{ opacity: 1 }}
+						transition={{ duration: 1 }}
+						className="relative h-screen flex items-center justify-center overflow-hidden"
 					>
-						<h2 className="text-5xl md:text-7xl font-serif font-bold mb-4">{category.title}</h2>
-						<p className="text-xl md:text-2xl font-light">{category.description}</p>
-					</motion.div>
-				</motion.section>
-			))}
+						<div
+							className="absolute inset-0 bg-cover bg-center bg-no-repeat cat-mobile-focus"
+							style={{
+								backgroundImage: `url('${category.image}')`,
+								...(objectPosition ? { '--cat-obj-pos': objectPosition.split(': ')[1] } : {}),
+							}}
+						/>
+						<div className="absolute inset-0 backdrop-blur-none bg-black/10" />
+
+						<motion.div
+							initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+							whileInView={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.8, delay: 0.3 }}
+							className="relative z-10 text-center text-white max-w-4xl mx-auto px-4"
+						>
+							<h2 className="text-5xl md:text-7xl font-serif font-bold mb-4">{category.title}</h2>
+							<p className="text-xl md:text-2xl font-light">{category.description}</p>
+						</motion.div>
+					</motion.section>
+				);
+			})}
 
 			{/* Gallery Section */}
 			<section id="portfolio" className="py-20 px-4 bg-warm-50 dark:bg-warm-975">
@@ -392,29 +403,36 @@ export default function PhotographyPortfolio() {
 						layout
 						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12"
 					>
-						{filteredImages.map((image) => (
-							<motion.div
-								key={image.id}
-								layout
-								initial={{ opacity: 0, scale: 0.8 }}
-								animate={{ opacity: 1, scale: 1 }}
-								exit={{ opacity: 0, scale: 0.8 }}
-								whileHover={{ scale: 1.02 }}
-								className="gallery-item relative group cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-								onClick={() => setSelectedImage(image.id)}
-							>
-								<img
-									src={image.src || "/placeholder.svg"}
-									alt={image.title}
-									className="w-full h-64 lg:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-								/>
-								<div className="absolute inset-0 bg-warm-900/0 group-hover:bg-warm-900/20 transition-all duration-300 flex items-center justify-center">
-									<h3 className="text-warm-50 text-xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-serif">
-										{image.title}
-									</h3>
-								</div>
-							</motion.div>
-						))}
+						{filteredImages.map((image) => {
+							// Set custom object-position for specific images on mobile
+							let galleryObjPos = undefined;
+							if (image.src === '/images/girl-potrait.jpg') galleryObjPos = '0% 38%';
+							if (image.src === '/images/Ksomani-0094.jpg') galleryObjPos = '0% 0%';
+							return (
+								<motion.div
+									key={image.id}
+									layout
+									initial={{ opacity: 0, scale: 0.8 }}
+									animate={{ opacity: 1, scale: 1 }}
+									exit={{ opacity: 0, scale: 0.8 }}
+									whileHover={{ scale: 1.02 }}
+									className="gallery-item relative group cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+									onClick={() => setSelectedImage(image.id)}
+								>
+									<img
+										src={image.src || "/placeholder.svg"}
+										alt={image.title}
+										className="w-full h-64 lg:h-80 object-cover transition-transform duration-500 group-hover:scale-105 gallery-mobile-focus"
+										style={galleryObjPos ? { ['--gallery-obj-pos' as any]: galleryObjPos } as React.CSSProperties : undefined}
+									/>
+									<div className="absolute inset-0 bg-warm-900/0 group-hover:bg-warm-900/20 transition-all duration-300 flex items-center justify-center">
+										<h3 className="text-warm-50 text-xl font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-serif">
+											{image.title}
+										</h3>
+									</div>
+								</motion.div>
+							);
+						})}
 					</motion.div>
 				</div>
 			</section>
@@ -618,7 +636,8 @@ export default function PhotographyPortfolio() {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+					className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center overflow-hidden w-screen max-w-none box-border overflow-x-hidden"
+					style={{ width: '100vw', maxWidth: '100vw', left: 0, right: 0, margin: 0, padding: 0 }}
 					onClick={() => setSelectedImage(null)}
 				>
 					<motion.img
@@ -627,7 +646,9 @@ export default function PhotographyPortfolio() {
 						exit={{ scale: 0.8 }}
 						src={galleryImages.find((img) => img.id === selectedImage)?.src}
 						alt={galleryImages.find((img) => img.id === selectedImage)?.title}
-						className="max-w-full max-h-full object-contain"
+						className="max-w-full max-h-full object-contain overflow-x-hidden select-none block m-auto"
+						style={{ touchAction: 'none', maxWidth: '100vw', maxHeight: '100vh', width: '100%', height: 'auto' }}
+						draggable={false}
 						onClick={(e) => e.stopPropagation()}
 					/>
 					<Button
