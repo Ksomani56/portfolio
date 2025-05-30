@@ -1,4 +1,6 @@
-"use client"
+"use client";
+
+import React from "react";
 
 import { useState, useEffect } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
@@ -8,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import emailjs from '@emailjs/browser';
 
 const categories = [
 	{
@@ -166,6 +169,44 @@ export default function PhotographyPortfolio() {
 		document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
 		setIsMenuOpen(false)
 	}
+
+	// Contact form state and handler
+	const [form, setForm] = React.useState({ name: '', email: '', message: '' });
+	const [sending, setSending] = React.useState(false);
+	const [sent, setSent] = React.useState(false);
+
+	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+		setForm({ ...form, [e.target.name]: e.target.value });
+	}
+
+	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		setSending(true);
+		setSent(false);
+		try {
+			await emailjs.send(
+				'service_83oq011', // user's EmailJS service ID
+				'template_ff3nmek', // user's EmailJS template ID
+				{
+					name: form.name,
+					email: form.email,
+					message: form.message,
+				},
+				'8p47xV_V5w2sN6zjo' // replace with your EmailJS public key
+			);
+			setSent(true);
+			setForm({ name: '', email: '', message: '' });
+		} catch (err) {
+			alert('Failed to send message. Please try again.');
+		} finally {
+			setSending(false);
+		}
+	}
+
+	// Initialize EmailJS public key
+	React.useEffect(() => {
+		emailjs.init('8p47xV_V5w2sN6zjo');
+	}, []);
 
 	return (
 		<div
@@ -536,29 +577,43 @@ export default function PhotographyPortfolio() {
 							className="space-y-6"
 						>
 							<Card className="p-6 bg-warm-100 dark:bg-warm-950 border-warm-200 dark:border-warm-900">
-								<form className="space-y-4">
+								{/* Contact Form */}
+								<form className="space-y-4" onSubmit={handleSubmit}>
 									<div>
 										<Input
+											name="name"
+											value={form.name}
+											onChange={handleChange}
 											placeholder="Your Name"
 											className="w-full bg-white dark:bg-warm-950 border-warm-400 dark:border-warm-700 text-warm-900 dark:text-warm-100 focus:border-[#898483] focus:ring-[#898483]"
+											required
 										/>
 									</div>
 									<div>
 										<Input
+											name="email"
 											type="email"
+											value={form.email}
+											onChange={handleChange}
 											placeholder="Your Email"
 											className="w-full bg-white dark:bg-warm-950 border-warm-400 dark:border-warm-700 text-warm-900 dark:text-warm-100 focus:border-[#898483] focus:ring-[#898483]"
+											required
 										/>
 									</div>
 									<div>
 										<Textarea
+											name="message"
+											value={form.message}
+											onChange={handleChange}
 											placeholder="Tell me about your project..."
 											className="w-full h-32 bg-white dark:bg-warm-950 border-warm-400 dark:border-warm-700 text-warm-900 dark:text-warm-100 focus:border-[#898483] focus:ring-[#898483]"
+											required
 										/>
 									</div>
-									<Button className="w-full bg-[#898483] hover:bg-[#c8bebc] text-white border-[#898483] transition-all duration-300">
-										Send Message
+									<Button type="submit" className="w-full bg-[#898483] hover:bg-[#c8bebc] text-white border-[#898483] transition-all duration-300" disabled={sending}>
+										{sending ? 'Sending...' : 'Send Message'}
 									</Button>
+									{sent && <p className="text-green-600">Message sent successfully!</p>}
 								</form>
 							</Card>
 						</motion.div>
@@ -576,7 +631,7 @@ export default function PhotographyPortfolio() {
 								</div>
 								<div className="flex items-center space-x-3">
 									<Phone className="h-5 w-5 text-warm-600 dark:text-warm-400" />
-									<span className="text-warm-700 dark:text-warm-300">7400233023</span>
+									<span className="text-warm-700 dark:text-warm-300">7400233022</span>
 								</div>
 							</div>
 
