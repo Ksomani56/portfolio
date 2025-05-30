@@ -509,9 +509,10 @@ export default function PhotographyPortfolio() {
 									telling stories that transcend time.
 								</p>
 								<p>
-									With over a decade of experience behind the lens, I specialize in finding the extraordinary in the
-									ordinary, whether it's the raw energy of street life, the intimate moments of a wedding, or the serene
-									beauty of nature.
+									I’m passionate about capturing powerful moments in everyday scenes—whether 
+									it’s the vibrant rhythm of street life, the quiet beauty of nature, 
+									or the authentic emotions of a wedding day. My work is all about finding 
+									meaning in the details and telling real stories through the lens.
 								</p>
 								<p>
 									Every photograph is a conversation between light and shadow, between the photographer and the subject,
